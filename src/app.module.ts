@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MeasurementsModule } from './measurements/measurements.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       url: process.env.MONGODB_CONNECTION_STRING,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
+    MeasurementsModule,
   ],
   controllers: [],
   providers: [],
