@@ -5,9 +5,17 @@ import { HappinessLevels } from '../constants/enums';
 
 @Entity()
 export class Measurement {
-  constructor(measurement?: Measurement) {
+  constructor(measurement: Measurement) {
     Object.assign(this, measurement);
   }
+
+  @ApiProperty()
+  @Column()
+  createdAt? = new Date();
+
+  @ApiProperty()
+  @Column()
+  trackingDate?: Date = new Date();
 
   @ObjectIdColumn() _id?: ObjectID;
 
@@ -18,5 +26,6 @@ export class Measurement {
   weight: number;
 
   @ApiProperty({ enum: HappinessLevels })
-  happinessLevel: HappinessLevels;
+  @Column()
+  happinessLevel: HappinessLevels = HappinessLevels.NORMAL;
 }

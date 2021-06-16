@@ -16,6 +16,8 @@ export class MeasurementsService {
   ) {}
 
   create(createMeasurementDto: CreateMeasurementDto) {
+    console.log(createMeasurementDto);
+
     const newMeasurement = new Measurement(createMeasurementDto);
     return this.measurementRepository.save(newMeasurement);
   }
