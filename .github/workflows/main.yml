@@ -35,6 +35,4 @@ jobs:
           api_key: ${{ secrets.HEROKU_API_KEY }}
           # Your Heroku App Name
           app_name: ${{ secrets.APP_NAME }}
-          # Dokerfile path
-          dockerfile_path: ./Dockerfile
 
