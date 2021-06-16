@@ -29,4 +29,6 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/main"]
+EXPOSE $PORT
+
+CMD PORT=$PORT node dist/main
