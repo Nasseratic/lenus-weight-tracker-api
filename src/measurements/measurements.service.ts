@@ -15,23 +15,46 @@ export class MeasurementsService {
     >,
   ) {}
 
-  create(createMeasurementDto: CreateMeasurementDto) {
-    console.log(createMeasurementDto);
-
-    const newMeasurement = new Measurement(createMeasurementDto);
+  create({
+    email,
+    createMeasurementDto,
+  }: {
+    email: string;
+    createMeasurementDto: CreateMeasurementDto;
+  }) {
+    const newMeasurement = new Measurement({
+      ...createMeasurementDto,
+      email,
+    });
     return this.measurementRepository.save(newMeasurement);
   }
 
-  findAll() {
-    return this.measurementRepository.find({});
+  findAll(email: string) {
+    return this.measurementRepository.find({ email });
   }
 
-  findOne(_id: string) {
-    return this.measurementRepository.findOne(_id);
+  findOne({ _id, email }: { email: string; _id: string }) {
+    return this.measurementRepository.findOne(_id, {
+      where: {
+        email,
+      },
+    });
   }
 
-  async update(_id: string, updateMeasurementDto: UpdateMeasurementDto) {
-    const old = await this.measurementRepository.findOne(_id);
+  async update({
+    _id,
+    email,
+    updateMeasurementDto,
+  }: {
+    email: string;
+    _id: string;
+    updateMeasurementDto: UpdateMeasurementDto;
+  }) {
+    const old = await this.measurementRepository.findOne(_id, {
+      where: {
+        email,
+      },
+    });
     if (old) {
       const updated = new Measurement({
         ...old,
@@ -42,8 +65,12 @@ export class MeasurementsService {
     } else throw 'Not Found';
   }
 
-  async remove(_id: string) {
-    if (await this.measurementRepository.findOne(_id))
+  async remove({ _id, email }: { email: string; _id: string }) {
+    if (
+      await this.measurementRepository.findOne(_id, {
+        where: { email },
+      })
+    )
       return this.measurementRepository.delete(_id);
     else throw 'Not Found';
   }

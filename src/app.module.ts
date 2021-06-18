@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MeasurementsModule } from './measurements/measurements.module';
+import { AuthenticationMiddleware } from './middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -19,4 +20,8 @@ import { MeasurementsModule } from './measurements/measurements.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthenticationMiddleware).forRoutes('*');
+  }
+}
