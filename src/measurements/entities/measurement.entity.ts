@@ -9,6 +9,11 @@ export class Measurement {
     Object.assign(this, measurement);
   }
 
+  @ObjectIdColumn() _id?: ObjectID;
+
+  @Column()
+  email: string;
+
   @ApiProperty()
   @Column()
   createdAt? = new Date();
@@ -16,8 +21,6 @@ export class Measurement {
   @ApiProperty()
   @Column()
   trackingDate?: Date = new Date();
-
-  @ObjectIdColumn() _id?: ObjectID;
 
   @ApiProperty()
   @IsInt()
